@@ -13,11 +13,13 @@ def load_data():
 def filter_data(list_to_filter, field, value):
     return list(filter(lambda match : match[field] == value, list_to_filter))
 
+def show_data(list_to_show, number_of_lines=5):
+    for row in list_to_show[:number_of_lines]:
+        print('{date} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'.format(**row))
+
+
 if __name__ == '__main__':
     li = load_data()
     argentina = filter_data(li, 'tournament', 'FIFA World Cup')
 
-    for m in argentina:
-        print (m)
-
-    print (len(argentina))
+    show_data(argentina)
