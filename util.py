@@ -1,5 +1,5 @@
 import csv
-
+from keras.preprocessing.text import Tokenizer
 def load_data():
     match_list=[]
     with open('results.csv', newline='') as result_file:
@@ -13,6 +13,9 @@ def load_data():
 def different_teams_names(list_to_get_names):
     return list(set([row['home_team'] for row in list_to_get_names] + [row['away_team'] for row in list_to_get_names]))
 
+def encode_teams_name(names):
+    return dict((team_name, i) for i, team_name in enumerate(names))
+
 def filter_data(list_to_filter, field, value):
     return list(filter(lambda match : match[field] == value, list_to_filter))
 
@@ -23,5 +26,6 @@ def show_data(list_to_show, number_of_lines=5):
 if __name__ == '__main__':
     li = load_data()
     filter_data = filter_data(li, 'tournament', 'FIFA World Cup')
-    print(different_teams_names(filter_data))
+    print(encode_teams_name(different_teams_names(filter_data)))
+    encode_teams_name
     show_data(filter_data,10)
