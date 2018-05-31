@@ -13,16 +13,12 @@ def load_data():
 def different_teams_names(list_to_get_names):
     return list(set([row['home_team'] for row in list_to_get_names] + [row['away_team'] for row in list_to_get_names]))
 
-
 def filter_data(list_to_filter, field, value):
     return list(filter(lambda match : match[field] == value, list_to_filter))
 
 def show_data(list_to_show, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
         print('{year} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'.format(**row))
-
-def get_some_columns_from_data(columns):
-    pass
 
 if __name__ == '__main__':
     li = load_data()
