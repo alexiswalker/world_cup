@@ -1,4 +1,5 @@
 import csv
+import numpy as np
 
 def load_data():
     match_list=[]
@@ -23,8 +24,21 @@ def show_data(list_to_show, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
         print('{year} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'.format(**row))
 
+def data_for_keras(matches, encode):
+    x = []
+    y = []
+    for match in matches:
+        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']])])
+        if match['home_score'] == match['away_score']:
+            y.append([0,1,0])
+        if match['home_score'] > match['away_score']:
+            y.append([1,0,0])
+        if match['home_score'] < match['away_score']:
+            y.append([0,0,1])
+
+    return np.array(x), np.array(y)
+
 if __name__ == '__main__':
     li = load_data()
     filter_data = filter_data(li, 'tournament', 'FIFA World Cup')
-    print(encode_teams_name(different_teams_names(filter_data)))
-    show_data(filter_data,10)
+    print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
