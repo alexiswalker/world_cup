@@ -17,8 +17,11 @@ def different_teams_names(list_to_get_names):
 def encode_teams_name(names):
     return dict((team_name, i) for i, team_name in enumerate(names))
 
-def filter_data(list_to_filter, field, value):
+def filter_data_filed_equal_value(list_to_filter, field, value):
     return list(filter(lambda match : match[field] == value, list_to_filter))
+
+def filter_data_filed_not_equal_value(list_to_filter, field, value):
+    return list(filter(lambda match : match[field] != value, list_to_filter))
 
 def show_data(list_to_show, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
@@ -35,7 +38,7 @@ def data_for_keras(matches, encode):
             y.append([0,0,1])
         if match['home_score'] == match['away_score']:
             y.append([0,1,0])
-            
+
     return np.array(x), np.array(y)
 
 def split_train_test(X, Y, percentage):
