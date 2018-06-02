@@ -3,7 +3,7 @@ import numpy as np
 
 def load_data():
     match_list=[]
-    with open('results.csv', newline='') as result_file:
+    with open('results.csv') as result_file:
         reader = csv.reader(result_file)
         next(reader) #data includes a first title line
         for row in reader:
@@ -29,14 +29,25 @@ def data_for_keras(matches, encode):
     y = []
     for match in matches:
         x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']])])
-        if match['home_score'] == match['away_score']:
-            y.append([0,1,0])
         if match['home_score'] > match['away_score']:
             y.append([1,0,0])
         if match['home_score'] < match['away_score']:
             y.append([0,0,1])
-
+        if match['home_score'] == match['away_score']:
+            y.append([0,1,0])
+            
     return np.array(x), np.array(y)
+
+def split_train_test(X, Y, percentage):
+    limit = int(len(X)*percentage)
+
+    X_train = X[:limit]
+    X_test = X[limit+1:]
+    y_train = Y[:limit]
+    y_test = Y[limit+1:]
+
+    return X_train, X_test,  y_train, y_test
+
 
 if __name__ == '__main__':
     li = load_data()
