@@ -17,10 +17,10 @@ def different_teams_names(list_to_get_names):
 def encode_teams_name(names):
     return dict((team_name, i) for i, team_name in enumerate(names))
 
-def filter_data_filed_equal_value(list_to_filter, field, value):
+def filter_data_field_equal_value(list_to_filter, field, value):
     return list(filter(lambda match : match[field] == value, list_to_filter))
 
-def filter_data_filed_not_equal_value(list_to_filter, field, value):
+def filter_data_field_not_equal_value(list_to_filter, field, value):
     return list(filter(lambda match : match[field] != value, list_to_filter))
 
 def show_data(list_to_show, number_of_lines=5):
