@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+import keras
 
 def load_data():
     match_list=[]
@@ -30,16 +31,19 @@ def show_data(list_to_show, number_of_lines=5):
 def data_for_keras(matches, encode):
     x = []
     y = []
-    for match in matches:
-        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']]), int(bool(match['neutral'].lower()))])
-        if match['home_score'] > match['away_score']:
-            y.append([1,0,0])
-        if match['home_score'] < match['away_score']:
-            y.append([0,0,1])
-        if match['home_score'] == match['away_score']:
-            y.append([0,1,0])
 
-    return np.array(x), np.array(y)
+    neutral = {'TRUE':1, 'FALSE':0}
+
+    for match in matches:
+        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']]), neutral[match['neutral']]])
+        if int(match['home_score']) > int(match['away_score']):
+            y.append(0)
+        if int(match['home_score']) < int(match['away_score']):
+            y.append(1)
+        if int(match['home_score']) == int(match['away_score']):
+            y.append(2)
+
+    return np.array(x), keras.utils.to_categorical(np.array(y), num_classes=3)
 
 def split_train_test(X, Y, percentage):
     limit = int(len(X)*percentage)
