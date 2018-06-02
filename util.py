@@ -49,7 +49,7 @@ def split_train_test(X, Y, percentage):
     y_train = Y[:limit]
     y_test = Y[limit+1:]
 
-    return X_train, X_test,  y_train, y_test
+    return X_train, X_test, y_train, y_test
 
 
 if __name__ == '__main__':
