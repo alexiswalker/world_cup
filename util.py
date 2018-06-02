@@ -35,7 +35,7 @@ def data_for_keras(matches, encode):
     neutral = {'TRUE':1, 'FALSE':0}
 
     for match in matches:
-        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']]), neutral[match['neutral']]])
+        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']])])
         if int(match['home_score']) > int(match['away_score']):
             y.append(0)
         if int(match['home_score']) < int(match['away_score']):
