@@ -31,7 +31,7 @@ def data_for_keras(matches, encode):
     x = []
     y = []
     for match in matches:
-        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']])])
+        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']]), int(bool(match['neutral'].lower()))])
         if match['home_score'] > match['away_score']:
             y.append([1,0,0])
         if match['home_score'] < match['away_score']:
@@ -54,5 +54,5 @@ def split_train_test(X, Y, percentage):
 
 if __name__ == '__main__':
     li = load_data()
-    filter_data = filter_data(li, 'tournament', 'FIFA World Cup')
+    filter_data = filter_data_field_equal_value(li, 'tournament', 'FIFA World Cup')
     print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
