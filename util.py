@@ -5,7 +5,7 @@ import keras
 STRING_FORMAT_MATCHES = '{date} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'
 STRING_FORMAT_POSITIONS = '{year} {title} {runner_up} {third} {fourth}'
 
-def load_data():
+def load_results_data():
     match_list=[]
     with open('results.csv') as result_file:
         reader = csv.reader(result_file)
@@ -15,7 +15,7 @@ def load_data():
 
     return match_list
 
-def load_data_positions():
+def load_positions_data():
     world_cups_list=[]
     with open('positions.csv') as result_file:
         reader = csv.reader(result_file)
@@ -70,13 +70,13 @@ def split_train_test(X, Y, percentage):
 
 
 if __name__ == '__main__':
-    li = load_data()
+    li = load_results_data()
     filter_data = filter_data_field_equal_value(li, 'tournament', 'FIFA World Cup')
     filter_data_arq_h = filter_data_field_equal_value(filter_data, 'home_team', 'France')
     filter_data_arq_a = filter_data_field_equal_value(filter_data, 'away_team', 'France')
     filter_data = filter_data_field_equal_value(filter_data_arq_h+filter_data_arq_a, 'year', '2006')
     show_data(filter_data,STRING_FORMAT_MATCHES, 60)
-    p = load_data_positions()
+    p = load_positions_data()
     show_data(p, STRING_FORMAT_POSITIONS, 50)
     print(len(filter_data))
     #print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
