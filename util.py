@@ -26,7 +26,7 @@ def filter_data_field_not_equal_value(list_to_filter, field, value):
 
 def show_data(list_to_show, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
-        print('{year} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'.format(**row))
+        print('{date} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'.format(**row))
 
 def data_for_keras(matches, encode):
     x = []
@@ -59,4 +59,9 @@ def split_train_test(X, Y, percentage):
 if __name__ == '__main__':
     li = load_data()
     filter_data = filter_data_field_equal_value(li, 'tournament', 'FIFA World Cup')
-    print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
+    filter_data_arq_h = filter_data_field_equal_value(filter_data, 'home_team', 'France')
+    filter_data_arq_a = filter_data_field_equal_value(filter_data, 'away_team', 'France')
+    filter_data = filter_data_field_equal_value(filter_data_arq_h+filter_data_arq_a, 'year', '2006')
+    show_data(filter_data, 60)
+    print(len(filter_data))
+    #print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
