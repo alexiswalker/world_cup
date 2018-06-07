@@ -53,6 +53,15 @@ def positions(positions_list, team):
             fourth +=1
     return title,  runner_up,  third, fourth
 
+def matches_statistics(matches, team_name):
+    team_matches = filter_data_field_equal_value(matches, 'home_team', team_name) +  filter_data_field_equal_value(matches, 'away_team', team_name)
+
+    win = len(filter(lambda match : (match['home_team'] == team_name and match['home_score'] > match['away_score']) or (match['away_team'] == team_name and match['away_score'] > match['home_score']) , team_matches))
+    lose = len(filter(lambda match : (match['home_team'] == team_name and match['home_score'] < match['away_score']) or (match['away_team'] == team_name and match['away_score'] < match['home_score']) , team_matches))
+    tie = len(filter(lambda match : (match['home_team'] == team_name or match['away_team'] == team_name) and ( match['home_score'] == match['away_score']), team_matches))
+
+    return win, lose, tie
+
 def show_data(list_to_show, string_format, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
         print(string_format.format(**row))
@@ -98,5 +107,8 @@ if __name__ == '__main__':
     print(len(filter_data))
     #print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
     '''
-    p = load_positions_data()
-    print positions(p, 'Germany')
+    #p = load_positions_data()
+    #print positions(p, 'Germany')
+    li = load_results_data()
+    filter_data = filter_data_field_equal_value(li, 'tournament', 'FIFA World Cup')
+    print matches_statistics(filter_data, 'Germany')
