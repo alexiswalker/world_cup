@@ -37,6 +37,22 @@ def filter_data_field_equal_value(list_to_filter, field, value):
 def filter_data_field_not_equal_value(list_to_filter, field, value):
     return list(filter(lambda match : match[field] != value, list_to_filter))
 
+def positions(positions_list, team):
+    title = 0
+    runner_up = 0
+    third = 0
+    fourth = 0
+    for row in positions_list:
+        if row['title'] == team:
+            title +=1
+        if row['runner_up'] == team:
+            runner_up +=1
+        if row['third'] == team:
+            third +=1
+        if row['fourth'] == team:
+            fourth +=1
+    return title,  runner_up,  third, fourth
+
 def show_data(list_to_show, string_format, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
         print(string_format.format(**row))
@@ -70,13 +86,17 @@ def split_train_test(X, Y, percentage):
 
 
 if __name__ == '__main__':
+    '''
     li = load_results_data()
     filter_data = filter_data_field_equal_value(li, 'tournament', 'FIFA World Cup')
     filter_data_arq_h = filter_data_field_equal_value(filter_data, 'home_team', 'France')
     filter_data_arq_a = filter_data_field_equal_value(filter_data, 'away_team', 'France')
     filter_data = filter_data_field_equal_value(filter_data_arq_h+filter_data_arq_a, 'year', '2006')
     show_data(filter_data,STRING_FORMAT_MATCHES, 60)
-    p = load_positions_data()
+
     show_data(p, STRING_FORMAT_POSITIONS, 50)
     print(len(filter_data))
     #print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
+    '''
+    p = load_positions_data()
+    print positions(p, 'Germany')
