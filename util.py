@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import keras
+from sklearn.preprocessing import MinMaxScaler
 
 STRING_FORMAT_MATCHES = '{date} ({home_score}){home_team} ({away_score}){away_team} - {tournament}'
 STRING_FORMAT_POSITIONS = '{year} {title} {runner_up} {third} {fourth}'
@@ -38,20 +39,12 @@ def filter_data_field_not_equal_value(list_to_filter, field, value):
     return list(filter(lambda match : match[field] != value, list_to_filter))
 
 def positions(positions_list, team):
-    title = 0
-    runner_up = 0
-    third = 0
-    fourth = 0
-    for row in positions_list:
-        if row['title'] == team:
-            title +=1
-        if row['runner_up'] == team:
-            runner_up +=1
-        if row['third'] == team:
-            third +=1
-        if row['fourth'] == team:
-            fourth +=1
-    return title,  runner_up,  third, fourth
+    title =  len(filter(lambda world_cup : world_cup['title'] == team, positions_list))
+    runner_up = len(filter(lambda world_cup : world_cup['runner_up'] == team, positions_list))
+    third = len(filter(lambda world_cup : world_cup['third'] == team, positions_list))
+    fourth = len(filter(lambda world_cup : world_cup['fourth'] == team, positions_list))
+
+    return [title*8 + runner_up*4 + third*2 + fourth]
 
 def matches_statistics(matches, team_name):
     team_matches = filter_data_field_equal_value(matches, 'home_team', team_name) +  filter_data_field_equal_value(matches, 'away_team', team_name)
@@ -59,21 +52,31 @@ def matches_statistics(matches, team_name):
     win = len(filter(lambda match : (match['home_team'] == team_name and match['home_score'] > match['away_score']) or (match['away_team'] == team_name and match['away_score'] > match['home_score']) , team_matches))
     lose = len(filter(lambda match : (match['home_team'] == team_name and match['home_score'] < match['away_score']) or (match['away_team'] == team_name and match['away_score'] < match['home_score']) , team_matches))
     tie = len(filter(lambda match : (match['home_team'] == team_name or match['away_team'] == team_name) and ( match['home_score'] == match['away_score']), team_matches))
+    #total = len(filter(lambda match : match['home_team'] == team_name or match['away_team'] == team_name, matches))
 
-    return win, lose, tie
+    return [win*1.0/(win+lose+tie)]
 
 def show_data(list_to_show, string_format, number_of_lines=5):
     for row in list_to_show[:number_of_lines]:
         print(string_format.format(**row))
 
-def data_for_keras(matches, encode):
-    x = []
+def data_for_keras(matches):
+
+    teams = different_teams_names(matches)
+    countries_positions = load_positions_data()
+    features = dict((team, matches_statistics(matches, team) + positions(countries_positions, team)) for team in teams)
+
+    X = []
     y = []
 
-    neutral = {'TRUE':1, 'FALSE':0}
-
     for match in matches:
-        x.append([int(match['year']), int(encode[match['home_team']]), int(encode[match['away_team']])])
+        if match['neutral'] == 'TRUE':
+            neutral = 1
+        else:
+            neutral = 0
+
+        X.append([neutral] + [int(match['year'])] + features[match['home_team']] + features[match['away_team']])
+
         if int(match['home_score']) > int(match['away_score']):
             y.append(0)
         if int(match['home_score']) < int(match['away_score']):
@@ -81,17 +84,10 @@ def data_for_keras(matches, encode):
         if int(match['home_score']) == int(match['away_score']):
             y.append(2)
 
-    return np.array(x), keras.utils.to_categorical(np.array(y), num_classes=3)
+    X, y = np.array(X), keras.utils.to_categorical(np.array(y), num_classes=3)
 
-def split_train_test(X, Y, percentage):
-    limit = int(len(X)*percentage)
+    return X, y
 
-    X_train = X[:limit]
-    X_test = X[limit+1:]
-    y_train = Y[:limit]
-    y_test = Y[limit+1:]
-
-    return X_train, X_test, y_train, y_test
 
 
 if __name__ == '__main__':
@@ -107,8 +103,9 @@ if __name__ == '__main__':
     print(len(filter_data))
     #print(data_for_keras(filter_data, encode_teams_name(different_teams_names(filter_data))))
     '''
-    #p = load_positions_data()
-    #print positions(p, 'Germany')
+    p = load_positions_data()
+
     li = load_results_data()
     filter_data = filter_data_field_equal_value(li, 'tournament', 'FIFA World Cup')
+
     print matches_statistics(filter_data, 'Germany')
