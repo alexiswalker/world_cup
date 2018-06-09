@@ -6,29 +6,54 @@ from sklearn.model_selection import train_test_split
 #load data
 #---------
 matches = load_results_data()
+countries_positions = load_positions_data()
 
-fifa_world_cup_matches = filter_data_field_equal_value(matches, 'tournament', 'FIFA World Cup')
-fifa_world_cup_qualification_matches = filter_data_field_equal_value(matches, 'tournament', 'FIFA World Cup qualification')
+filter_matches = list(
+                        filter(lambda match :
+                                    match['tournament'] == 'FIFA World Cup'
+                                    or
+                                    match['tournament'] == 'FIFA World Cup qualification'
+                                ,matches))
 
-#matches_2010 = filter_data_field_equal_value(matches, 'year', '2010')
-#matches_2014 = filter_data_field_equal_value(fifa_world_cup_matches + fifa_world_cup_qualification_matches, 'year', '2014')
-#matches_not_2014 = filter_data_field_not_equal_value(fifa_world_cup_matches + fifa_world_cup_qualification_matches, 'year', '2014')
+different_teams_names = different_teams_names(filter_matches)
 
-filter_matches = fifa_world_cup_matches + fifa_world_cup_qualification_matches
 
-#matches_2014 = filter_data_field_equal_value(filter_matches, 'year', '2014')
-#matches_not_2014 = filter_data_field_not_equal_value(filter_matches, 'year', '2014')
 
-X, y = data_for_keras(filter_matches)
+statistics = dict((team, matches_statistics(filter_matches, team)) for team in different_teams_names)
+scores = dict((team, positions(countries_positions, team)) for team in different_teams_names)
+
+
+X = []
+y = []
+
+for match in filter_matches:
+    if match['neutral'] == 'TRUE':
+        neutral = 1
+    else:
+        neutral = 0
+
+    X.append(
+                [neutral] +
+                [int(match['year'])] +
+                statistics[match['home_team']] +
+                scores[match['home_team']] +
+                statistics[match['away_team']] +
+                scores[match['away_team']]
+            )
+
+    if int(match['home_score']) > int(match['away_score']):
+        y.append(0)
+    if int(match['home_score']) < int(match['away_score']):
+        y.append(1)
+    if int(match['home_score']) == int(match['away_score']):
+        y.append(2)
+
+X, y = np.array(X), keras.utils.to_categorical(np.array(y), num_classes=3)
+
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-#X_train, y_train = data_for_keras(matches_not_2014)
-#X_test, y_test = data_for_keras(matches_2014)
 
-
-#X_train, y_train = data_for_keras(matches_not_2014, encode)
-#X_cross_test, y_cross_test = data_for_keras(matches_2014, encode)
-#X_test, y_test = data_for_keras(matches_2014, encode)
 
 #create model
 #------------
