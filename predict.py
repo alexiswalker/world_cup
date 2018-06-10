@@ -1,7 +1,8 @@
-from statistics import *
+from statistics import get_statistics, get_scores, get_year_statistics
 import numpy as np
+import keras as k
 
-model = keras.models.load_model('world_cup_model.h5')
+model = k.models.load_model('world_cup_model.h5')
 
 def predict_result(home_team, away_team, year):
     X_predict = np.array([
@@ -11,12 +12,11 @@ def predict_result(home_team, away_team, year):
                         ])
 
     prediction = model.predict(X_predict)
-    print prediction
 
     if (prediction[0][0] > prediction[0][1]):
-        return home_team
+        return home_team, prediction[0][0]
     else:
-        return away_team
+        return away_team, prediction[0][1]
 
 
 
