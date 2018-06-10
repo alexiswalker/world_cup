@@ -21,5 +21,55 @@ def predict_result(home_team, away_team, year):
 
 
 if __name__ == '__main__':
-    print predict_result('Iceland', 'Argentina', 2018)
-    print predict_result('Argentina', 'Iceland', 2018)
+    world_cup_matches_russia_2018 = [
+            ('Russia', 'Saudi Arabia'),
+            ('Egypt', 'Uruguay'),
+            ('Morocco', 'Iran'),
+            ('Portugal', 'Spain'),
+            ('France', 'Australia'),
+            ('Argentina', 'Iceland'),
+            ('Peru', 'Denmark'),
+            ('Croatia', 'Nigeria'),
+
+        ]
+
+    for team1, team2 in world_cup_matches_russia_2018:
+        print team1, team2
+        print predict_result(team1, team2, 2018)
+        print predict_result(team2, team1, 2018)
+
+
+'''
+Egypt
+Morocco
+Nigeria
+Senegal
+Tunisia
+Saudi Arabia
+Australia
+Japan
+Korea Republic,
+Iran
+Germany
+Belgium
+Croatia
+Denmark
+Spain
+France
+England
+Iceland
+Poland
+Portugal
+Russia
+Serbia
+Sweden
+Switzerland
+Costa Rica
+Mexico
+Panama
+Argentina
+Brazil
+Colombia
+Peru
+Uruguay
+'''

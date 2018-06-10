@@ -12,45 +12,60 @@ y = []
 
 for match in filter_matches:
     if match['neutral'] == 'TRUE':
-        neutral = 1
+        X.append(
+                    [1] +
+                    #[int(match['year'])] +
+                    get_statistics(match['home_team']) +
+                    get_scores(match['home_team']) +
+                    get_year_statistics(str(int(match['year'])), match['home_team']) +
+                    get_year_statistics(str(int(match['year'])-1), match['home_team']) +
+                    get_statistics(match['away_team']) +
+                    get_scores(match['away_team']) +
+                    get_year_statistics(str(int(match['year'])), match['away_team'])+
+                    get_year_statistics(str(int(match['year'])-1), match['away_team'])
+                )
+
+        if int(match['home_score']) > int(match['away_score']):
+            y.append(0)
+        if int(match['home_score']) < int(match['away_score']):
+            y.append(1)
+
+        X.append(
+                    [1] +
+                    #[int(match['year'])] +
+                    get_statistics(match['away_team']) +
+                    get_scores(match['away_team']) +
+                    get_year_statistics(str(int(match['year'])), match['away_team']) +
+                    get_year_statistics(str(int(match['year'])-1), match['away_team']) +
+                    get_statistics(match['home_score']) +
+                    get_scores(match['home_score']) +
+                    get_year_statistics(str(int(match['year'])), match['home_score'])+
+                    get_year_statistics(str(int(match['year'])-1), match['home_score'])
+                )
+
+        if int(match['away_score']) > int(match['home_score']):
+            y.append(0)
+        if int(match['away_score']) < int(match['home_score']):
+            y.append(1)
+
     else:
-        neutral = 0
+        X.append(
+                    [0] +
+                    #[int(match['year'])] +
+                    get_statistics(match['home_team']) +
+                    get_scores(match['home_team']) +
+                    get_year_statistics(str(int(match['year'])), match['home_team']) +
+                    get_year_statistics(str(int(match['year'])-1), match['home_team']) +
+                    get_statistics(match['away_team']) +
+                    get_scores(match['away_team']) +
+                    get_year_statistics(str(int(match['year'])), match['away_team'])+
+                    get_year_statistics(str(int(match['year'])-1), match['away_team'])
+                )
 
-    X.append(
-                [neutral] +
-                #[int(match['year'])] +
-                get_statistics(match['home_team']) +
-                get_scores(match['home_team']) +
-                get_year_statistics(str(int(match['year'])), match['home_team']) +
-                get_year_statistics(str(int(match['year'])-1), match['home_team']) +
-                get_statistics(match['away_team']) +
-                get_scores(match['away_team']) +
-                get_year_statistics(str(int(match['year'])), match['away_team'])+
-                get_year_statistics(str(int(match['year'])-1), match['away_team'])
-            )
-
-    if int(match['home_score']) > int(match['away_score']):
-        y.append(0)
-    if int(match['home_score']) < int(match['away_score']):
-        y.append(1)
-
-    X.append(
-                [neutral] +
-                #[int(match['year'])] +
-                get_statistics(match['away_team']) +
-                get_scores(match['away_team']) +
-                get_year_statistics(str(int(match['year'])), match['away_team']) +
-                get_year_statistics(str(int(match['year'])-1), match['away_team']) +
-                get_statistics(match['home_score']) +
-                get_scores(match['home_score']) +
-                get_year_statistics(str(int(match['year'])), match['home_score'])+
-                get_year_statistics(str(int(match['year'])-1), match['home_score'])
-            )
-
-    if int(match['away_score']) > int(match['home_score']):
-        y.append(0)
-    if int(match['away_score']) < int(match['home_score']):
-        y.append(1)
+        if int(match['home_score']) > int(match['away_score']):
+            y.append(0)
+        if int(match['home_score']) < int(match['away_score']):
+            y.append(1)
 
 X, y = np.array(X), keras.utils.to_categorical(np.array(y), num_classes=2)
 
@@ -65,13 +80,13 @@ model = Sequential()
 
 #neural network
 #--------------
-model.add(Dense(64, input_dim=21, init='uniform'))
+model.add(Dense(128, input_dim=21, init='uniform'))
 model.add(Activation('tanh'))
 model.add(Dropout(0.5))
-model.add(Dense(64, init='uniform'))
+model.add(Dense(128, init='uniform'))
 model.add(Activation('tanh'))
 model.add(Dropout(0.5))
-model.add(Dense(64, init='uniform'))
+model.add(Dense(128, init='uniform'))
 model.add(Activation('tanh'))
 model.add(Dropout(0.5))
 model.add(Dense(2, init='uniform'))
@@ -87,7 +102,7 @@ optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0)
 
 model.compile(loss = 'categorical_crossentropy', optimizer = optimizer, metrics=['accuracy'])
 
-model.fit(X_train, y_train, epochs=100, batch_size=256)
+model.fit(X_train, y_train, epochs=20, batch_size=128)
 #
 model_scores = model.evaluate(X_test, y_test)
 print model_scores
