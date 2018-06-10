@@ -24,9 +24,11 @@ for match in filter_matches:
                 get_statistics(match['home_team']) +
                 get_scores(match['home_team']) +
                 get_year_statistics(str(int(match['year'])), match['home_team']) +
+                get_year_statistics(str(int(match['year'])-1), match['home_team']) +
                 get_statistics(match['away_team']) +
                 get_scores(match['away_team']) +
-                get_year_statistics(str(int(match['year'])), match['away_team'])
+                get_year_statistics(str(int(match['year'])), match['away_team'])+
+                get_year_statistics(str(int(match['year'])-1), match['away_team'])
             )
 
     if int(match['home_score']) > int(match['away_score']):
@@ -39,18 +41,19 @@ for match in filter_matches:
                 #[int(match['year'])] +
                 get_statistics(match['away_team']) +
                 get_scores(match['away_team']) +
+                get_year_statistics(str(int(match['year'])), match['away_team']) +
                 get_year_statistics(str(int(match['year'])-1), match['away_team']) +
-                get_statistics(match['home_team']) +
-                get_scores(match['home_team']) +
-                get_year_statistics(str(int(match['year'])-1), match['home_team'])
-
+                get_statistics(match['home_score']) +
+                get_scores(match['home_score']) +
+                get_year_statistics(str(int(match['year'])), match['home_score'])+
+                get_year_statistics(str(int(match['year'])-1), match['home_score'])
             )
+
     if int(match['away_score']) > int(match['home_score']):
         y.append(0)
     if int(match['away_score']) < int(match['home_score']):
         y.append(1)
-    #if int(match['home_score']) == int(match['away_score']):
-    #    y.append(2)
+
 
 X, y = np.array(X), keras.utils.to_categorical(np.array(y), num_classes=2)
 
@@ -62,7 +65,7 @@ model = Sequential()
 
 #neural network
 #--------------
-model.add(Dense(64, input_dim=17, init='uniform'))
+model.add(Dense(64, input_dim=21, init='uniform'))
 model.add(Activation('tanh'))
 model.add(Dropout(0.5))
 model.add(Dense(64, init='uniform'))
@@ -89,13 +92,21 @@ model.fit(X_train, y_train, epochs=20, batch_size=128)
 model_scores = model.evaluate(X_test, y_test)
 print('Test accuracy: %s: %.2f%%' % (model.metrics_names[1], model_scores[1]*100))
 
+
+model.save('world_cup_model.h5')  # creates a HDF5 file 'my_model.h5'
+del model  # deletes the existing model
+
+
+
+
+'''
 X_predict = np.array([
                             [1] +
-                            get_statistics('Argentina') + get_scores('Argentina') + get_year_statistics('2018','Argentina') +
-                            get_statistics('Paraguay') + get_scores('Paraguay') + get_year_statistics('2018','Paraguay')
+                            get_statistics('Argentina') + get_scores('Argentina') + get_year_statistics('2018','Argentina') + get_year_statistics('2017','Argentina') +
+                            get_statistics('Paraguay') + get_scores('Paraguay') + get_year_statistics('2018','Paraguay') + get_year_statistics('2017','Paraguay')
                     ])
 
 print model.predict(X_predict)
-
+'''
 #score, acc  = model.evaluate(X_cross_test, y_cross_test)
 #print('Test accuracy: %s: %.2f%%' % (model.metrics_names[1], scores[1]*100))
