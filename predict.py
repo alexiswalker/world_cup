@@ -14,9 +14,9 @@ def predict_result(home_team, away_team, year):
     prediction = model.predict(X_predict)
 
     if (prediction[0][0] > prediction[0][1]):
-        return home_team, prediction[0][0]
+        return home_team + ': ' + str(prediction[0][0])
     else:
-        return away_team, prediction[0][1]
+        return away_team + ': ' + str(prediction[0][1])
 
 
 
@@ -30,14 +30,57 @@ if __name__ == '__main__':
             ('Argentina', 'Iceland'),
             ('Peru', 'Denmark'),
             ('Croatia', 'Nigeria'),
-
+            ('Costa Rica', 'Serbia'),
+            ('Germany', 'Mexico'),
+            ('Brazil', 'Switzerland'),
+            ('Sweden', 'Korea Republic'),
+            ('Belgium', 'Panama'),
+            ('Tunisia', 'England'),
+            ('Colombia', 'Japan'),
+            ('Poland', 'Senegal'),
+            ('Russia', 'Egypt'),
+            ('Portugal', 'Morocco'),
+            ('Uruguay', 'Saudi Arabia'),
+            ('Iran', 'Spain'),
+            ('Denmark', 'Australia'),
+            ('France', 'Peru'),
+            ('Argentina', 'Croatia'),
+            ('Brazil', 'Costa Rica'),
+            ('Nigeria', 'Iceland'),
+            ('Serbia', 'Switzerland'),
+            ('Belgium', 'Tunisia'),
+            ('Korea Republic', 'Mexico'),
+            ('Germany', 'Sweden'),
+            ('England', 'Panama'),
+            ('Japan', 'Senegal'),
+            ('Poland', 'Colombia'),
+            ('Saudi Arabia', 'Egypt'),
+            ('Uruguay', 'Russia'),
+            ('Iran', 'Portugal'),
+            ('Spain', 'Morocco'),
+            ('Australia', 'Peru'),
+            ('Denmark', 'France'),
+            ('Nigeria', 'Argentina'),
+            ('Iceland', 'Croatia'),
+            ('Mexico', 'Sweden'),
+            ('Korea Republic', 'Germany'),
+            ('Switzerland', 'Costa Rica'),
+            ('Serbia', 'Brazil'),
+            ('Senegal', 'Colombia'),
+            ('Japan', 'Poland'),
+            ('England', 'Belgium'),
+            ('Panama', 'Tunisia')
         ]
 
-    for team1, team2 in world_cup_matches_russia_2018:
-        print team1, team2
-        print predict_result(team1, team2, 2018)
-        print predict_result(team2, team1, 2018)
+    file = open('predictions.txt','w')
 
+    for team1, team2 in world_cup_matches_russia_2018:
+        file.write(team1 + ' vs ' + team2 + '\n')
+        file.write(predict_result(team1, team2, 2018) + '\n')
+        file.write(predict_result(team2, team1, 2018) + '\n')
+        file.write('-----------------------\n')
+
+    file.close()
 
 '''
 Egypt
