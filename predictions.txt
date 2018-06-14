@@ -1,0 +1,192 @@
+Russia vs Saudi Arabia
+Russia: 0.5238055
+Russia: 0.6912686
+-----------------------
+Egypt vs Uruguay
+Uruguay: 0.53241736
+Uruguay: 0.7877958
+-----------------------
+Morocco vs Iran
+Iran: 0.6170977
+Iran: 0.53065586
+-----------------------
+Portugal vs Spain
+Spain: 0.5725147
+Spain: 0.76864636
+-----------------------
+France vs Australia
+France: 0.74344367
+France: 0.6224819
+-----------------------
+Argentina vs Iceland
+Argentina: 0.81054515
+Argentina: 0.6183708
+-----------------------
+Peru vs Denmark
+Denmark: 0.6412354
+Denmark: 0.54133004
+-----------------------
+Croatia vs Nigeria
+Croatia: 0.51805335
+Croatia: 0.86057454
+-----------------------
+Costa Rica vs Serbia
+Costa Rica: 0.54182494
+Costa Rica: 0.6369852
+-----------------------
+Germany vs Mexico
+Germany: 0.86346453
+Germany: 0.7457237
+-----------------------
+Brazil vs Switzerland
+Brazil: 0.8768093
+Brazil: 0.6948284
+-----------------------
+Sweden vs Korea Republic
+Sweden: 0.5489285
+Sweden: 0.8030837
+-----------------------
+Belgium vs Panama
+Belgium: 0.62040657
+Belgium: 0.8062225
+-----------------------
+Tunisia vs England
+England: 0.58978033
+England: 0.80389875
+-----------------------
+Colombia vs Japan
+Japan: 0.5853341
+Japan: 0.50651777
+-----------------------
+Poland vs Senegal
+Poland: 0.6809237
+Poland: 0.9554328
+-----------------------
+Russia vs Egypt
+Russia: 0.53401303
+Russia: 0.7188832
+-----------------------
+Portugal vs Morocco
+Portugal: 0.5967073
+Portugal: 0.90438884
+-----------------------
+Uruguay vs Saudi Arabia
+Uruguay: 0.7875228
+Uruguay: 0.5315269
+-----------------------
+Iran vs Spain
+Spain: 0.58634883
+Spain: 0.80276877
+-----------------------
+Denmark vs Australia
+Australia: 0.5658965
+Australia: 0.5032658
+-----------------------
+France vs Peru
+France: 0.74749625
+France: 0.62940353
+-----------------------
+Argentina vs Croatia
+Argentina: 0.7995791
+Argentina: 0.60697556
+-----------------------
+Brazil vs Costa Rica
+Brazil: 0.87663794
+Brazil: 0.6944313
+-----------------------
+Nigeria vs Iceland
+Nigeria: 0.5785945
+Nigeria: 0.70748794
+-----------------------
+Serbia vs Switzerland
+Switzerland: 0.6176645
+Switzerland: 0.5114349
+-----------------------
+Belgium vs Tunisia
+Tunisia: 0.51776564
+Belgium: 0.6585507
+-----------------------
+Korea Republic vs Mexico
+Mexico: 0.6382262
+Mexico: 0.5325641
+-----------------------
+Germany vs Sweden
+Germany: 0.8260573
+Germany: 0.7101346
+-----------------------
+England vs Panama
+England: 0.8122177
+England: 0.6025719
+-----------------------
+Japan vs Senegal
+Japan: 0.53360784
+Japan: 0.6577448
+-----------------------
+Poland vs Colombia
+Poland: 0.6697514
+Poland: 0.95040125
+-----------------------
+Saudi Arabia vs Egypt
+Egypt: 0.5289115
+Saudi Arabia: 0.5757951
+-----------------------
+Uruguay vs Russia
+Uruguay: 0.7803697
+Uruguay: 0.5286026
+-----------------------
+Iran vs Portugal
+Portugal: 0.8835804
+Portugal: 0.5596114
+-----------------------
+Spain vs Morocco
+Spain: 0.80575514
+Spain: 0.5916568
+-----------------------
+Australia vs Peru
+Australia: 0.5826255
+Australia: 0.66505843
+-----------------------
+Denmark vs France
+France: 0.62449676
+France: 0.74437326
+-----------------------
+Nigeria vs Argentina
+Argentina: 0.6143692
+Argentina: 0.8080536
+-----------------------
+Iceland vs Croatia
+Croatia: 0.9081202
+Croatia: 0.61671335
+-----------------------
+Mexico vs Sweden
+Sweden: 0.7927236
+Sweden: 0.54928344
+-----------------------
+Korea Republic vs Germany
+Germany: 0.7490111
+Germany: 0.8627489
+-----------------------
+Switzerland vs Costa Rica
+Costa Rica: 0.549694
+Costa Rica: 0.5014973
+-----------------------
+Serbia vs Brazil
+Brazil: 0.6961264
+Brazil: 0.8771396
+-----------------------
+Senegal vs Colombia
+Colombia: 0.618894
+Senegal: 0.516453
+-----------------------
+Japan vs Poland
+Poland: 0.9464889
+Poland: 0.65099114
+-----------------------
+England vs Belgium
+England: 0.79320866
+England: 0.5842553
+-----------------------
+Panama vs Tunisia
+Tunisia: 0.7418856
+Tunisia: 0.606559
+-----------------------
