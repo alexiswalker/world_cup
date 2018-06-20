@@ -38,4 +38,4 @@ def show_data(list_to_show, string_format, number_of_lines=5):
 
 
 if __name__ == '__main__':
-    pass
+    print different_teams_names(load_results_data())

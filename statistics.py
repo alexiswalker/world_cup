@@ -84,4 +84,4 @@ def get_scores(team):
         return len(_scores[_scores.keys()[0]])*[0]
 
 if __name__ == '__main__':
-    print get_year_statistics('20145','Argentina')
+    print get_year_statistics('2018','Argentina')
